@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sg.CartMapperSG">
+	<select id="getOverOrZeroStockCartBooksByUserId"
+		parameterType="string" resultType="BookSG">
+		select * from Cart c, Book b
+		where
+		(c.book_id = b.book_id and user_id = #{userId} and cart_del = 'n')
+		and
+		(c.book_cnt > b.book_stock or b.book_stock = 0)
+	</select>
+	<select id="getNotDelTotalOrderPriceByUserId"
+		parameterType="string" resultType="integer">
+		select nvl(sum(c.book_cnt *
+		b.book_price), 0) from Cart c, Book b where b.book_id = c.book_id and
+		user_id = #{userId} and cart_del = 'n'
+	</select>
+	<update id="update" parameterType="CartSG">
+		update Cart set
+		book_cnt = #{bookCnt},
+		cart_del = #{cartDel}
+		where cart_id = #{cartId}
+	</update>
+	<select id="select" parameterType="integer" resultType="CartSG">
+		select *
+		from Cart where cart_id = #{id}
+	</select>
+	<select id="getNotDelAllCartBooksByUserId"
+		parameterType="string" resultType="BookSG">
+		select * from Cart c, Book b
+		where
+		b.book_id = c.book_id and user_id = #{userId} and c.cart_del = 'n'
+		order by c.cart_date desc, c.cart_id desc
+	</select>
+	<select id="getNotDelCartBooksByUserId" parameterType="map"
+		resultType="BookSG">
+		select * from (
+		select f_qry.*, rownum as rnum from (
+		select c.cart_id, c.user_id, c.book_id, c.book_cnt, c.cart_del, c.cart_date,
+		b.bsc_id, b.book_price, b.book_name, b.book_writer, b.book_desc,
+		b.book_index, b.book_pub_cmt, b.book_stock, b.book_date, b.book_img,
+		b.book_page, b.book_size, b.book_isbn, b.book_out, b.book_rcd_cnt
+		from Cart c, Book b where b.book_id = c.book_id and user_id = #{userId}
+		and c.cart_del = 'n'
+		order by c.cart_date desc, c.cart_id desc
+		) f_qry
+		) where rnum between #{startIdx} and #{endIdx}
+	</select>
+	<select id="getNotDelTotalByUserId" parameterType="string"
+		resultType="integer">
+		select count(*) from Cart where user_id = #{userId} and
+		cart_del = 'n'
+	</select>
+	<select id="getTotal">
+		select count(*) from Cart
+	</select>
+	<insert id="insert" parameterType="CartSG">
+		insert into Cart values (
+		(select count(*) from Cart) + 1,
+		#{userId},
+		#{bookId},
+		#{bookCnt},
+		'n',
+		sysdate
+		)
+	</insert>
+	<select id="selectNotDelByBookIdAndUserId" parameterType="map"
+		resultType="CartSG">
+		select * from Cart where user_id = #{userId} and book_id =
+		#{bookId} and cart_del = 'n'
+	</select>
+
+
+	<delete id="clearCart" parameterType="String">
+		DELETE FROM Cart WHERE user_id = #{userId}
+	</delete>
+</mapper>

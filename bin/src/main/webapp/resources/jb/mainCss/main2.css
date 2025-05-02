@@ -1,0 +1,45 @@
+@charset "UTF-8";
+#bestNnew {
+	margin: 40px 0px;
+	text-align: left;
+	letter-spacing: 1.5px;
+}
+.box {
+	margin: 20px 0px;
+	width: 100%;
+}
+.bookImg  { /* 이미지 */
+	border: 0.5px solid rgba(104, 105, 107,0.6);
+	border-right: 3.5px solid rgba(104, 105, 107,0.1);
+	border-top-left-radius:3px;
+	border-top-right-radius:10px;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:10px;
+	width: 180px;
+	height: 230px;
+	margin: 5px 0px;
+	
+}
+.bookSlot {
+	margin: 10px 0px; 
+}
+.title {
+	font-weight: bold;
+	color: #807a79;
+	display: block;
+	font-size: 18px;
+}
+.writer {
+	color: #807a79;
+	display: block;
+	font-size: 14px;
+}
+h3 {
+	display: inline;
+	color :#ff914c;
+	margin-right: 7px;
+	
+}
+span {
+	color: #bfbdb6;
+}

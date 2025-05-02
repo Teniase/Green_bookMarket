@@ -1,0 +1,163 @@
+/* cart-style.css */
+/* ===== 공통 컨테이너 ===== */
+#cart-container,
+#page-container,
+#order-form-container {
+  position: relative;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+#page-container {
+  text-align: center;
+  padding: 15px;
+}
+
+#order-form-container {
+  text-align: center;
+}
+
+.container-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ===== 페이지 버튼 ===== */
+#prev-page-btn,
+#next-page-btn,
+.page-btn {
+  cursor: pointer;
+}
+
+#cur-page-btn {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/* ===== 장바구니 항목 ===== */
+.book-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+  background-color: #fff;
+  margin-bottom: 16px;
+}
+
+.book-img-container {
+  width: 20%;
+}
+
+.book-img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.book-desc-container {
+  width: 40%;
+  text-align: center;
+  font-size: 14px;
+}
+
+.book-request-price-container {
+  background-color: #fffaf2;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #f3d5b5;
+  margin-bottom: 8px;
+  white-space: pre-line;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.book-request-container {
+  width: 18%;
+  text-align: center;
+}
+
+.book-req-cnt-input {
+  width: 60px;
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.book-cnt-display-container {
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.book-delete-container {
+  margin-left: auto;
+  text-align: center;
+}
+
+.book-delete-btn {
+  border: none;
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ===== 주문 요약 ===== */
+.order-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #dee2e6;
+  font-size: 14px;
+}
+
+.order-summary-item:last-child {
+  border-bottom: none;
+}
+
+.order-total-line {
+  font-weight: bold;
+  font-size: 16px;
+  padding-top: 10px;
+  text-align: end;
+}
+
+#total-order-display-container {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+  margin-top: 20px;
+}
+
+#order-btn {
+  background-color: #0d6efd;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.btn-order {
+  width: 100%;
+}
+
+#cur-page-btn {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+  border: 1px solid #0d6efd !important;
+  font-weight: bold;
+}

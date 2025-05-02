@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sg.BookMapperSG">
+	<select id="getCategoryBookList" parameterType="map" resultType="BookSG">
+		select * from (
+		    select f_qry.*, rownum as rnum from (
+		        select b.book_id, b.bsc_id, b.book_price, b.book_name,
+		        b.book_writer, b.book_desc, b.book_index,
+		        b.book_pub_cmt, b.book_stock, b.book_date, b.book_img, 
+		        b.book_page, b.book_size, b.book_isbn, b.book_out, b.book_rcd_cnt,
+		        bsr.bsr_id, bsr.pub_id, bsr.bsr_cnt, bsr.bsr_yn, bsr.bsr_date, bsr.bsr_confirm, 
+		        bsc.bsc_name, 
+		        blc.blc_id, blc.blc_name
+		        from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		        where bsr.bsr_yn = 'y' and b.book_id = bsr.book_id and b.bsc_id = bsc.bsc_id and bsc.bsc_id = #{bscId}
+		        and bsc.blc_id = blc.blc_id
+		        order by b.book_out asc, b.book_date desc, b.book_id desc
+		    ) f_qry
+		) where rnum between #{startIdx} and #{endIdx}
+	</select>
+	<select id="getCategoryBookTotal" parameterType="integer" resultType="integer">
+		select count(*) from (
+		    select f_qry.*, rownum as rnum from (
+		        select b.book_id, b.bsc_id, b.book_price, b.book_name,
+		        b.book_writer, b.book_desc, b.book_index,
+		        b.book_pub_cmt, b.book_stock, b.book_date, b.book_img, 
+		        b.book_page, b.book_size, b.book_isbn, b.book_out, b.book_rcd_cnt,
+		        bsr.bsr_id, bsr.pub_id, bsr.bsr_cnt, bsr.bsr_yn, bsr.bsr_date, bsr.bsr_confirm, 
+		        bsc.bsc_name, 
+		        blc.blc_id, blc.blc_name
+		        from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		        where bsr.bsr_yn = 'y' and b.book_id = bsr.book_id and b.bsc_id = bsc.bsc_id and bsc.bsc_id = #{bscId}
+		        and bsc.blc_id = blc.blc_id
+		        order by b.book_out asc, b.book_date desc, b.book_id desc
+		    ) f_qry
+		)
+	</select>
+	<select id="getWeeklyBestBooks" parameterType="integer" resultType="BookSG">
+		select * from (
+		    select f_qry.*, rownum as rnum from (
+		        select b.book_id, b.bsc_id, b.book_price, b.book_name, 
+		        b.book_writer, b.book_desc, b.book_index,
+		        b.book_pub_cmt, b.book_stock, b.book_date, b.book_img, 
+		        b.book_page, b.book_size, b.book_isbn, b.book_out, b.book_rcd_cnt,
+		        bsr.bsr_id, bsr.pub_id, bsr.bsr_cnt, bsr.bsr_yn, bsr.bsr_date, bsr.bsr_confirm,
+		        bsc.bsc_name, 
+		        blc.blc_id, blc.blc_name
+		        from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		        where bsr.bsr_yn = 'y' and b.book_id = bsr.book_id and b.bsc_id = bsc.bsc_id and bsc.blc_id = blc.blc_id
+		        and b.book_out = 'n' and b.book_stock != 0 
+		        and to_date(b.book_date, 'YYYY-MM-DD') between to_date(sysdate - 7, 'YYYY-MM-DD') and to_date(sysdate, 'YYYY-MM-DD')
+		        order by b.book_rcd_cnt desc, b.book_date desc, b.book_id desc
+		    ) f_qry
+		) where rnum between 1 and #{getCnt}
+	</select>
+	<select id="getTodayBestBooks" parameterType="integer" resultType="BookSG">
+		select * from (
+		    select f_qry.*, rownum as rnum from (
+		        select b.book_id, b.bsc_id, b.book_price, b.book_name, 
+		        b.book_writer, b.book_desc, b.book_index,
+		        b.book_pub_cmt, b.book_stock, b.book_date, b.book_img, 
+		        b.book_page, b.book_size, b.book_isbn, b.book_out, b.book_rcd_cnt,
+		        bsr.bsr_id, bsr.pub_id, bsr.bsr_cnt, bsr.bsr_yn, bsr.bsr_date, bsr.bsr_confirm,
+		        bsc.bsc_name, 
+		        blc.blc_id, blc.blc_name
+		        from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		        where bsr.bsr_yn = 'y' and b.book_id = bsr.book_id and b.bsc_id = bsc.bsc_id and bsc.blc_id = blc.blc_id
+		        and b.book_out = 'n' and b.book_stock != 0 and b.book_date like to_date(sysdate, 'YYYY-MM-DD')
+		        order by b.book_rcd_cnt desc, b.book_date desc, b.book_id desc
+		    ) f_qry
+		) where rnum between 1 and #{getCnt}
+	</select>
+	<select id="select" parameterType="integer" resultType="BookSG">
+		select * from Book where book_id = #{id}
+	</select>
+	<select id="selectByOnSaleTagged" parameterType="integer" resultType="BookSG">
+		select * from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		where b.book_id = #{id}
+		and b.book_id = bsr.book_id 
+		and bsr.bsr_yn = 'y' 
+		and b.bsc_id = bsc.bsc_id 
+		and bsc.blc_id = blc.blc_id
+	</select>
+	<select id="getTotal" resultType="integer">
+		select count(*) from Book
+	</select>
+	<select id="getByKwOnSaleTaggedTotal" parameterType="string" resultType="integer">
+		select count(*) from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		where bsr.bsr_yn = 'y' and b.book_id = bsr.book_id and bsr.bsr_yn = 'y' and b.bsc_id = bsc.bsc_id and bsc.blc_id = blc.blc_id
+		and b.book_name like '%' || #{keyword} || '%'
+	</select>
+	<select id="getByKwOnSaleTaggedList" parameterType="map" resultType="BookSG">
+		select * from (
+		    select f_qry.*, rownum as rnum from (
+		        select b.book_id, b.bsc_id, b.book_price, 
+		        b.book_name, b.book_writer, b.book_desc, b.book_index,
+		        b.book_pub_cmt, b.book_stock, b.book_date, 
+		        b.book_img, b.book_page, b.book_size, b.book_isbn, b.book_out, b.book_rcd_cnt,
+		        bsr.bsr_id, bsr.pub_id, bsr.bsr_cnt, bsr.bsr_yn, bsr.bsr_date, bsr.bsr_confirm,
+		        bsc.bsc_name, 
+		        blc.blc_id, blc.blc_name
+		        from Book b, BookSellRequest bsr, BookLargeCategory blc, BookSmallCategory bsc
+		        where bsr.bsr_yn = 'y' and b.book_id = bsr.book_id and b.bsc_id = bsc.bsc_id and bsc.blc_id = blc.blc_id
+		        and b.book_name like '%' || #{keyword} || '%'
+		        order by b.book_out asc, b.book_date desc, b.book_id desc
+		    ) f_qry
+		) where rnum between #{startIdx} and #{endIdx}
+	</select>
+	<insert id="insert" parameterType="BookSG">
+		insert into Book values (
+			#{bookId},
+			#{bscId},
+			#{bookPrice},
+			#{bookName},
+			#{bookWriter},
+			#{bookDesc},
+			#{bookIndex},
+			#{bookPubCmt},
+			#{bookStock},
+			sysdate,
+			#{bookImg},
+			#{bookPage},
+			#{bookSize},
+			#{bookIsbn},
+			'n'
+		)
+	</insert>
+	<update id="update" parameterType="BookSG">
+		update Book set
+		bsc_id = #{bscId},
+		book_price = #{bookPrice},
+		book_name = #{bookName},
+		book_writer = #{bookWriter},
+		book_desc = #{bookDesc},
+		book_index = #{bookIndex},
+		book_pub_cmt = 
+		<choose>
+			<when test="bookPubCmt == null">''</when>
+			<otherwise>#{bookPubCmt}</otherwise>
+		</choose>,
+		book_stock = #{bookStock},
+		book_date = #{bookDate},
+		book_img = 
+		<choose>
+			<when test="bookImg == null">''</when>
+			<otherwise>#{bookImg}</otherwise>
+		</choose>,
+		book_page = #{bookPage},
+		book_size = #{bookSize},
+		book_isbn = #{bookIsbn},
+		book_out = #{bookOut},
+		book_rcd_cnt = #{bookRcdCnt}
+		where book_id = #{bookId}
+	</update>
+	
+</mapper>

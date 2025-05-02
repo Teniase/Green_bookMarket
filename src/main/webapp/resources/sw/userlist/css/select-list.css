@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+/* 기본 설정 */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0fdf5;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 탭 헤더 */
+.tab-header {
+  display: flex;
+  justify-content: center;
+  max-width: 420px;
+  margin: 80px auto 30px auto;
+  border-bottom: 2px solid #6d8c50;
+}
+
+.tab-header .tab-btn {
+  flex: 1;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #2b473e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-header .tab-btn.active {
+  border-bottom: 3px solid #6d8c50;
+  color: #6d8c50;
+}
+
+/* 탭 콘텐츠 */
+.tab-content {
+  display: none;
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border: 2px solid #6d8c50;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* 테이블 커스터마이징 */
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.table-custom thead {
+  background-color: #6d8c50;
+  color: white;
+}
+
+.table-custom th, 
+.table-custom td {
+  padding: 14px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.table-custom tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-custom tbody tr:hover {
+  background-color: #edf5e1;
+}
+
+/* 링크 버튼 */
+a.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6d8c50;
+  border: 1.5px solid #6d8c50;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a.btn:hover {
+  background-color: #6d8c50;
+  color: white;
+}
+
+.withdrawn-row td {
+  color: #bbb;
+  font-style: italic;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.withdraw-toggle-container {
+  max-width: 900px;
+  margin: 30px auto 10px auto;
+  text-align: right;
+  font-size: 14px;
+}
+
+.withdraw-toggle-container input[type="checkbox"] {
+  margin-right: 6px;
+  transform: scale(1.2);
+}
+
+.custom-pagination .page-item .page-link {
+  color: #2b473e;
+  border: 1px solid #6d8c50;
+  margin: 0 4px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination .page-item .page-link:hover {
+  background-color: #6d8c50;
+  color: white;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #6d8c50;
+  border-color: #6d8c50;
+  color: white;
+}

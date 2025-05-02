@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.jb.OrderMapperJB">
+	<select id="getOrder" parameterType="String"
+		resultType="orderJB">
+		select * from orders
+		where order_id=(select max(order_id)
+		from orders) and user_id = #{userId}
+	</select>
+
+	<update id="payComp" parameterType="map">
+		update orders set order_pay =
+		'y', paymentKey=#{paymentKey} where order_id=#{orderId}
+	</update>
+
+	<update id="updateOrder" parameterType="map">
+		UPDATE orders SET
+		order_confirm='y' WHERE order_id = #{orderId}
+	</update>
+
+	<select id="getOrderById" parameterType="int"
+		resultType="orderJb">
+		SELECT * FROM orders WHERE order_id = #{orderId}
+	</select>
+
+
+
+	<select id="getUserOrders" parameterType="map"
+		resultType="orderJb">
+		select * from orders where user_id=#{userId} AND order_del
+		= 'n'
+		ORDER BY order_date DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS
+		ONLY
+	</select>
+
+	<select id="getUserOrderCount" parameterType="string"
+		resultType="int">
+		SELECT COUNT(*) FROM orders WHERE user_id = #{userId} AND order_del = 'n'
+	</select>
+
+	<select id="getAllOrders" parameterType="map"
+		resultType="orderJb">
+		SELECT * FROM orders
+		WHERE order_del = 'n'
+		<if test="keyword != null">
+			AND order_id = #{keyword}
+		</if>
+		ORDER BY order_date DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+
+
+	<select id="getOrderCount" parameterType="map" resultType="orderJb">
+		SELECT COUNT(*) FROM orders
+		WHERE order_del = 'n'
+		<if test="keyword != null">
+			AND order_id = #{keyword}
+		</if>
+	</select>
+
+
+
+	<update id="cancelOrder" parameterType="integer">
+		UPDATE orders SET order_del = 'y' WHERE order_id = #{orderId}
+	</update>
+
+</mapper>

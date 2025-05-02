@@ -1,0 +1,77 @@
+@charset "UTF-8";
+
+#book-container {
+	position: relative;
+	display: inline-block;
+	border: 1px solid black;
+	width: 100%;
+}
+
+#book-desc-container {
+	position: absolute;
+	border: 1px solid black;
+	display: inline-block;
+	word-wrap: break-word;
+	width: 50%;
+}
+
+#book-rcd-container {
+
+	width: 100%;
+	word-wrap: break-word;
+	text-align: center;
+}
+
+#book-interaction-container {
+	position: absolute;
+	border: 1px solid black;
+	width: 100%;
+	word-wrap: break-word;
+	text-align: center;
+}
+
+#book-request-control-container {
+	border: 1px solid black;
+}
+
+#book-req-cnt {
+	display: inline-block;
+	width: 6%;
+}
+
+#book-req-cnt-inc-btn {
+	
+}
+
+#book-req-cnt-dec-btn {
+	
+}
+
+#book-total-price {
+	width: 80px;
+	text-align: right;
+}
+
+#cart {
+	border: 1px solid black;
+	display: inline-block;
+}
+
+#recommend {
+	border: 1px solid black;
+	display: inline-block;
+}
+
+#book-info-container {
+	position: relative;
+	border: 1px solid black;
+}
+
+.detail-wrapper {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 2rem;
+	background: #fff;
+	border-radius: 1rem;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}

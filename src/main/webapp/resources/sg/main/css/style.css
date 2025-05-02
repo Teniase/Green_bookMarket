@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+#today-best-book-container {
+	border: 1px solid black;
+}
+
+.today-best-book-img {
+	width: 100%;
+}
+
+.today-best-book-info-container {
+	border: 1px solid black;
+}
+
+.weekly-best-book-img {
+	width: 100%;
+}
+
+.weekly-best-book-info-container {
+	border: 1px solid black;
+}

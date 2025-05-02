@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sw.UserMapperSW">
+
+	<select id="select" parameterType="string" resultType="userSW">
+		select *
+		from users where user_id=#{userId}
+	</select>
+
+	<select id="selectEmail" parameterType="string"
+		resultType="userSW">
+		select * from users where user_email=#{userEmail}
+	</select>
+
+	<insert id="insert" parameterType="userSW">
+		insert into users values (
+		#{userId},
+		#{userName},
+		#{userBirth},
+		#{userEmail},
+		#{userPw},
+		#{userAddr},
+		'n',
+		sysdate,
+		'',
+		#{userTel}
+		)
+	</insert>
+
+	<update id="update" parameterType="userSW">
+		update users set
+		user_name=#{userName},
+		user_birth=#{userBirth},
+		user_email=#{userEmail},
+		user_pw=#{userPw},
+		user_addr=#{userAddr},
+		user_tel=#{userTel}
+		<if test="userImg!=null and userImg!=''">
+			, user_img=#{userImg}
+		</if>
+		where
+		user_id=#{userId}
+	</update>
+
+	<update id="delete" parameterType="string">
+		update users set user_del =
+		'y' where user_id = #{userId}
+	</update>
+
+	<select id="selectlist" resultType="userSW">
+		select * from users order by
+		user_join
+	</select>
+
+	<select id="getUserList" resultType="userSW" parameterType="map">
+		select * from users
+		<where>
+			<if test="keyword!= null and keyword!=''">
+				${searchType} like '%'||#{keyword}||'%'
+				<if test="hideWithdrawn">
+					and user_del != 'y'
+				</if>
+			</if>
+			<if test="keyword== null or keyword==''">
+				<if test="hideWithdrawn">
+					user_del != 'y'
+				</if>
+			</if>
+		</where>
+		order by user_id offset #{offset} rows fetch next #{limit} rows only
+	</select>
+
+	<select id="getUserCount" resultType="integer"
+		parameterType="map">
+		select count(*) from users
+		<where>
+			<if test="keyword!= null and keyword!=''">
+				${searchType} like '%'||#{keyword}||'%'
+				<if test="hideWithdrawn">
+					and user_del != 'y'
+				</if>
+			</if>
+			<if test="keyword== null or keyword==''">
+				<if test="hideWithdrawn">
+					user_del != 'y'
+				</if>
+			</if>
+		</where>
+	</select>
+
+</mapper>

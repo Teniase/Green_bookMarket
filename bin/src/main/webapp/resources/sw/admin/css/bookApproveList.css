@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.custom-pagination .page-item .page-link {
+  color: #2b473e;
+  border: 1px solid #6d8c50;
+  margin: 0 4px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination .page-item .page-link:hover {
+  background-color: #6d8c50;
+  color: white;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #6d8c50;
+  border-color: #6d8c50;
+  color: white;
+}

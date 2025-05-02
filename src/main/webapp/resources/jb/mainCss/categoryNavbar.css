@@ -1,0 +1,26 @@
+.category-bar {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.category-bar .dropdown-toggle {
+  background-color: #f8f9fa;
+  color: #2b473e;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.category-bar .dropdown-toggle:hover {
+  background-color: #e9f2e0;
+  color: #1c2b24;
+}
+
+.category-bar .dropdown-menu {
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+}

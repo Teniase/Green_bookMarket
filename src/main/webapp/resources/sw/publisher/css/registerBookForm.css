@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+body {
+	background-color: #f8f9fa;
+}
+
+form {
+	background-color: #fff;
+	border-radius: 12px;
+	padding: 30px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+form h2 {
+	font-weight: bold;
+}
+
+label.form-label {
+	font-weight: 500;
+}
+
+#imgPreview {
+	max-width: 200px;
+	max-height: 250px;
+	margin-top: 10px;
+	border: 1px solid #ccc;
+	display: none;
+}
+
+/* 중복확인 버튼 크기 조절 */
+.input-with-button button {
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: #6d8c50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.input-with-button button:hover {
+  background-color: #5c7d45;
+}
+
+#isbn-dup-msg {
+  font-size: 0.9em;
+  color: #d9534f;
+  margin-top: 5px;
+}
+

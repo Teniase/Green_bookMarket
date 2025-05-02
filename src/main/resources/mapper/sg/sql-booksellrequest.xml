@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sg.BookSellRequestMapperSG">
+	<select id="getTotal" resultType="integer">
+		select count(*) from BookSellRequest
+	</select>
+	<insert id="insert" parameterType="BookSellRequestSG">
+		insert into BookSellRequest values (
+			#{bsrId},
+			#{bookId},
+			#{pubId},
+			#{bsrCnt},
+			'n',
+			sysdate,
+			''
+		)
+	</insert>
+</mapper>

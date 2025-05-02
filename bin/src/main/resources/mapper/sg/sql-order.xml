@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sg.OrderMapperSG">
+	<update id="updateByUserId" parameterType="map">
+		update Orders set
+		order_del = #{order.orderDel},
+		order_confirm = #{order.orderConfirm}
+		where order_id = #{order.orderId} and user_id = #{userId}
+	</update>
+	<select id="getAcptedOrderList" parameterType="map" resultType="OrderSG">
+		select * from (
+		    select ord1.*, rownum as rnum from (
+		        select * from Orders where user_id = #{userId} and order_del = 'n' and order_confirm = 'y'
+		        order by order_date desc, order_id desc
+		    ) ord1
+		) where rnum between #{startIdx} and #{endIdx}
+	</select>
+	<select id="getAcptedOrderBookList" parameterType="map" resultType="BookSG">
+		select * from (
+		    select ord1.*, rownum as rnum from (
+		        select * from Orders where user_id = #{userId} and order_del = 'n' and order_confirm = 'y'
+		        order by order_date desc, order_id desc
+		    ) ord1
+		) ord2, OrderDetail od, Book b 
+		where ord2.order_id = od.order_id and od.book_id = b.book_id and rnum between #{startIdx} and #{endIdx} 
+		order by ord2.order_id desc, od.od_id asc
+	</select>
+	<select id="getAcptedOdrTotalByUserId" parameterType="string" resultType="integer">
+		select count(*) from Orders
+		where user_id = #{userId} and order_del = 'n' and order_confirm = 'y'
+	</select>
+	<select id="getReqOrderList" parameterType="map" resultType="OrderSG">
+		select * from (
+		    select ord1.*, rownum as rnum from (
+		        select * from Orders where user_id = #{userId} and order_del = 'n' and order_confirm = 'n'
+		        order by order_date desc, order_id desc
+		    ) ord1
+		) where rnum between #{startIdx} and #{endIdx}
+	</select>
+	<select id="getReqOrderBookList" parameterType="map" resultType="BookSG">
+		select * from (
+		    select ord1.*, rownum as rnum from (
+		        select * from Orders where user_id = #{userId} and order_del = 'n' and order_confirm = 'n'
+		        order by order_date desc, order_id desc
+		    ) ord1
+		) ord2, OrderDetail od, Book b where ord2.order_id = od.order_id and od.book_id = b.book_id 
+		and rnum between #{startIdx} and #{endIdx} order by ord2.order_id desc, od.od_id asc
+	</select>
+	<select id="getReqOdrTotalByUserId" parameterType="string" resultType="integer">
+		select count(*) from Orders 
+		where user_id = #{userId} and order_del = 'n' and order_confirm = 'n'
+	</select>
+	<select id="select" parameterType="integer" resultType="OrderSG">
+		select * from Orders where order_id = #{id}
+	</select>
+	<select id="getTotal">
+		select count(*) from Orders
+	</select>
+	<insert id="insert" parameterType="OrderSG">
+		insert into Orders values (
+			(select count(*) from Orders) + 1,
+			#{userId},
+			sysdate,
+			'n',
+			'n'
+		)
+	</insert>
+</mapper>

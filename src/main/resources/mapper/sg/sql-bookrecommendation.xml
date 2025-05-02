@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sg.BookRecommendationMapperSG">
+	<select id="selectByUserIdAndBookIdAndCurDay" parameterType="map" resultType="BookRecommendationSG">
+		select * from BookRecommendation
+		where rcd_date like to_date(#{curDate}, 'YYYY-MM-DD')
+		and user_id = #{userId}
+		and book_id = #{bookId}
+	</select>
+	<insert id="insert" parameterType="map">
+		insert into BookRecommendation values (
+			(select count(*) from BookRecommendation) + 1,
+			#{userId},
+			#{bookId},
+			sysdate
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sw.AdminMapperSW">
+	<select id="getList" parameterType="map" resultType="BookSW">
+		SELECT *
+		FROM Book b
+		JOIN BookSellRequest bsr ON b.book_id = bsr.book_id
+		WHERE bsr.bsr_yn = 'n'
+		ORDER BY b.book_date DESC, b.book_id DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+	</select>
+
+
+	<update id="approveBook" parameterType="int">
+		UPDATE BookSellRequest
+		SET bsr_yn = 'y'
+		WHERE bsr_id = #{bsrId}
+	</update>
+
+	<update id="rejectBook" parameterType="map">
+		UPDATE BookSellRequest
+		SET
+		bsr_yn = 'r',
+		bsr_reason = #{reason}
+		WHERE bsr_id = #{bsrId}
+	</update>
+
+	<!-- 승인 대기 도서 총 개수 조회 -->
+	<select id="getPendingBookCount" resultType="int">
+		SELECT COUNT(*)
+		FROM BookSellRequest bsr
+		WHERE bsr.bsr_yn = 'n'
+	</select>
+
+  
+
+</mapper>

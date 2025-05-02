@@ -1,0 +1,68 @@
+@charset "UTF-8";
+/* 전체 컨테이너 */
+.complete-container {
+  max-width: 720px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  margin: 50px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* 제목 */
+.complete-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2b473e;
+  margin-bottom: 16px;
+}
+
+/* 메시지 */
+.complete-message {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* 주문 정보 */
+.complete-info p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #555;
+}
+
+/* 테이블 */
+.complete-table {
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 24px;
+  border-collapse: collapse;
+}
+
+.complete-table td {
+  padding: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.complete-table td:first-child {
+  background-color: #f8f9fa;
+  width: 120px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 버튼 */
+.complete-button {
+  background-color: #6d8c50;
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.complete-button:hover {
+  background-color: #5c7744;
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.bookmarket.app.mapper.jb.OrderDetailMapperJB">
+	<select id="getOrderdetails" parameterType="integer"
+		resultType="OrderDetailJB">
+		select o.*,b.book_name, b.book_price, b.book_img, b.bsc_id,
+		bsc.bsc_name
+		from OrderDetail o, book b, booksmallcategory bsc where
+		order_id=#{orderId}
+		and b.book_id = o.book_id and b.bsc_id = bsc.bsc_id
+	</select>
+
+	<update id="bookStock" parameterType="OrderDetailJB">
+		update book
+		set book_stock = (book_stock-#{odrCnt})
+		where book_id=#{bookId}
+	</update>
+	<!-- <update id="bookStock" parameterType="java.util.List" > <foreach collection="list" 
+		item="item" separator=";" index="index"> update book set book_stock = book_stock 
+		- #{item.odrCnt} where book_id=#{item.bookId} </foreach> </update> -->
+
+	<select id="getPagedOrderDetails" parameterType="map"
+		resultType="orderDetailJB">
+		SELECT *
+		FROM (
+		SELECT ROWNUM rnum, A.*
+		FROM (
+		SELECT *
+		FROM order_detail
+		WHERE order_id = #{orderId}
+		ORDER BY od_id
+		) A
+		WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE rnum &gt;= #{startRow}
+	</select>
+	
+	<select id="getOrderDetailCount" parameterType="int"
+		resultType="int">
+		SELECT COUNT(*) FROM order_detail WHERE order_id =
+		#{orderId}
+	</select>
+</mapper>

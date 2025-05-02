@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+body {
+    background-color: #f4f9f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.detail-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 40px 50px;
+    max-width: 700px;
+    width: 100%;
+    border: 1px solid #e0eae0;
+}
+
+.detail-title {
+    color: #2b473e;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.profile-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #6d8c50;
+}
+
+.table-custom th {
+    width: 150px;
+    background-color: #edf4ec;
+    color: #2b473e;
+    font-weight: 600;
+}
+
+.table-custom td {
+    background-color: #ffffff;
+    color: #333;
+}

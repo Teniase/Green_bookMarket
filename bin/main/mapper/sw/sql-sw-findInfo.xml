@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookmarket.app.mapper.sw.FindInfoMapperSW">
+	<select id="selectId" resultType="userSW" parameterType="userSW">
+		select * from users where user_email=#{userEmail} and user_name =#{userName}
+	</select>
+	
+	<select id="selectPubId" resultType="pubSW" parameterType="pubSW">
+		select * from bookPublisher where pub_email=#{pubEmail} and pub_name=#{pubName}
+	</select>
+	
+	<select id="selectPw" resultType="userSW" parameterType="userSW">
+		select * from users where user_id=#{userId} and user_email=#{userEmail}
+	</select>
+	
+	<select id="selectPubPw" resultType="pubSW" parameterType="pubSW">
+		select * from bookPublisher where pub_id=#{pubId} and pub_email=#{pubEmail}
+	</select>
+	
+	<update id="updatePw" parameterType="userSW">
+	    update users set user_pw=#{userPw} where user_id =#{userId}
+	</update>
+	
+	<update id="updatePubPW" parameterType="pubSW">
+	    update bookPublisher set pub_pw=#{pubPw} where pub_id =#{pubId}
+	</update>
+</mapper>

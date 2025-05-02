@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f4f1eb;
+	color: #2b473e;
+}
+
+
+.nav-pills .nav-link {
+	font-weight: 500;
+	color: #2b473e;
+	transition: all 0.3s;
+}
+
+.nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+	background-color: #6d8c50;
+	color: white !important;
+	border-radius: 10px;
+}
+
+.btn-success {
+	background-color: #6d8c50;
+	border-color: #6d8c50;
+}
+
+.btn-success:hover {
+	background-color: #5b7342;
+	border-color: #5b7342;
+}
+
+.page-link {
+	color: #2b473e;
+}
+
+.page-link:hover {
+	background-color: #6d8c50;
+	color: white;
+}
+
+.page-item.active .page-link {
+	background-color: #2b473e;
+	border-color: #2b473e;
+	color: white;
+}
+
+.book-card .card-title {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #333;
+}
+
+.book-card .card-text {
+	font-size: 0.85rem;
+}
+
+.book-card img {
+	height: 180px;
+	object-fit: fill;
+}
+
+.card-img-top {
+  height: 320px;       /* 원하는 고정 높이 */
+  object-fit: cover;   /* 비율 유지하며 잘라냄 */
+}
+
+.book-card .badge {
+	font-size: 0.75rem;
+}

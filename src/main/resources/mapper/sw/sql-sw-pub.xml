@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookmarket.app.mapper.sw.PubMapperSW">
+
+	<select id="select" parameterType="integer" resultType="pubsw">
+		select *
+		from BookPublisher where pub_id=#{pubId}
+	</select>
+
+	<select id="selectEmail" parameterType="String"
+		resultType="pubsw">
+		select * from BookPublisher where pub_email=#{pubEmail}
+	</select>
+
+	<insert id="insert" parameterType="pubsw">
+		insert into BookPublisher values (
+		#{pubId},
+		#{pubName},
+		#{pubPw},
+		#{pubAddr},
+		#{pubEmail},
+		#{pubCeo},
+		sysdate,
+		'n',
+		#{pubMgr}
+		)
+	</insert>
+
+	<update id="update" parameterType="pubsw">
+		update BookPublisher set
+		pub_name=#{pubName},
+		pub_pw=#{pubPw},
+		pub_addr=#{pubAddr},
+		pub_email=#{pubEmail},
+		pub_ceo=#{pubCeo},
+		pub_mgr=#{pubMgr}
+		where pub_id=#{pubId}
+	</update>
+
+	<update id="delete" parameterType="string">
+		update BookPublisher set pub_del = 'y' where pub_id = #{pubId}
+	</update>
+
+	<select id="selectlist" resultType="pubsw">
+		select * from BookPublisher order by pub_join
+	</select>
+
+	<select id="getPubList" resultType="pubSW">
+		select * from BookPublisher
+		<where>
+			<if test="keyword!= null and keyword!=''">
+				${searchType} like '%'||#{keyword}||'%'
+				<if test="hideWithdrawn">
+					and pub_del != 'y'
+				</if>
+			</if>
+			<if test="keyword== null or keyword==''">
+				<if test="hideWithdrawn">
+					pub_del != 'y'
+				</if>
+			</if>
+		</where>
+
+	</select>
+
+	<select id="getPubCount" resultType="integer">
+		select count(*) from BookPublisher
+		<where>
+			<if test="keyword!= null and keyword!=''">
+				${searchType} like '%'||#{keyword}||'%'
+				<if test="hideWithdrawn">
+					and pub_del != 'y'
+				</if>
+			</if>
+			<if test="keyword== null or keyword==''">
+				<if test="hideWithdrawn">
+					pub_del != 'y'
+				</if>
+			</if>
+		</where>
+	</select>
+</mapper>

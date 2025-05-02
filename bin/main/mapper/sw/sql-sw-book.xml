@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookmarket.app.mapper.sw.BookMapperSW">
+
+	<!-- <insert id="insertBook" parameterType="map"> 
+	insert all 
+	into Book values 
+		((select count(*) from Book) + 1, #{bsc.bscId}, 
+		#{book.bookPrice}, #{book.bookName}, 
+		#{book.bookWriter} , #{book.bookDesc} , 
+		#{book.bookIndex}, #{book.bookPubCmt}, 
+		#{bsr.bsrCnt}, sysdate, #{book.bookImg}, 
+		#{book.bookPage}, #{book.bookSize}, 
+		#{book.bookIsbn}, 'n', 0) 
+		
+		into BookSellRequest values 
+		((select count(*) from 	BookSellRequest) + 1, 
+		(select count(*) from Book) + 1, 
+		#{pubId} , #{bsr.bsrCnt},'n', 
+		sysdate, '', '') select * from dual 
+	</insert> 백업, 원코드 -->
+
+<!-- 	<insert id="insertBook" parameterType="map">
+    insert all
+    into Book (
+        book_id, bsc_id, book_price, book_name, book_writer, book_desc,
+        book_index, book_pub_cmt, book_stock, book_date,
+        book_img, book_page, book_size, book_isbn, book_out, book_rcd_cnt
+    ) values (
+        (select count(*) from Book) + 1,
+        #{bsc.bscId}, 
+        #{book.bookPrice}, 
+        #{book.bookName}, 
+        #{book.bookWriter},
+        #{book.bookDesc},
+        #{book.bookIndex},
+        #{book.bookPubCmt},
+        #{bsr.bsrCnt},  
+        sysdate,
+        #{book.bookImg},
+        #{book.bookPage},
+        #{book.bookSize},
+        #{book.bookIsbn},
+        'n',
+        0
+    )
+    into BookSellRequest (
+        bsr_id, book_id, pub_id, bsr_cnt, bsr_yn, bsr_date, bsr_confirm, bsr_reason
+    ) values (
+        (select count(*) from BookSellRequest) + 1,
+        (select count(*) from Book) + 1,
+        #{pubId},
+        #{bsr.bsrCnt},
+        'n',
+        sysdate,
+        '',
+        ''
+    )
+select * from dual
+</insert> -->
+
+<insert id="insertBook" parameterType="map">
+    
+    <!-- 1개 selectKey로 id 하나만 뽑는다 -->
+    <selectKey keyProperty="newId" resultType="int" order="BEFORE">
+        SELECT BOOK_SEQ.NEXTVAL FROM dual
+    </selectKey>
+
+    insert all
+        into Book (
+            book_id, bsc_id, book_price, book_name, book_writer, book_desc,
+            book_index, book_pub_cmt, book_stock, book_date,
+            book_img, book_page, book_size, book_isbn, book_out, book_rcd_cnt
+        ) values (
+            #{newId},
+            #{bsc.bscId},
+            #{book.bookPrice},
+            #{book.bookName},
+            #{book.bookWriter},
+            #{book.bookDesc},
+            #{book.bookIndex},
+            #{book.bookPubCmt},
+            #{bsr.bsrCnt},
+            sysdate,
+            #{book.bookImg},
+            #{book.bookPage},
+            #{book.bookSize},
+            #{book.bookIsbn},
+            'n',
+            0
+        )
+        into BookSellRequest (
+            bsr_id, book_id, pub_id, bsr_cnt, bsr_yn, bsr_date, bsr_confirm, bsr_reason
+        ) values (
+            #{newId},
+            #{newId},
+            #{pubId},
+            #{bsr.bsrCnt},
+            'n',
+            sysdate,
+            null,
+            ''
+        )
+    select * from dual
+
+</insert>
+
+
+
+
+	<select id="selectIsbn" parameterType="string"
+		resultType="bookSW">
+		select * from Book where book_isbn=#{bookIsbn}
+	</select>
+
+
+	<select id="getBookStockList" resultType="bookSW"
+		parameterType="map">
+		SELECT
+		b.*,
+		bp.pub_name AS pubName
+		FROM book b
+		JOIN booksellrequest bsr ON
+		b.book_id = bsr.book_id
+		JOIN bookpublisher bp ON bsr.pub_id = bp.pub_id
+		WHERE bsr.bsr_yn = 'y'
+		<if test="keyword != null and keyword != ''">
+			AND (
+			LOWER(b.book_name) LIKE '%' || LOWER(#{keyword}) ||
+			'%'
+			OR LOWER(b.book_writer) LIKE '%' || LOWER(#{keyword}) || '%'
+			)
+		</if>
+		ORDER BY b.book_id DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS
+		ONLY
+	</select>
+
+	<update id="update" parameterType="bookSW">
+		update book set
+		book_name=#{bookName},
+		book_writer=#{bookWriter},
+		book_price=#{bookPrice},
+		book_stock=#{bookStock},
+		book_desc=#{bookDesc},
+		bsc_id=#{bscId},
+		book_index=#{bookIndex}
+		<if test="bookImg!=null and bookImg!=''">
+			, book_img=#{bookImg}
+		</if>
+		where book_id=#{bookId}
+	</update>
+
+
+	<select id="getBookCount" resultType="int"
+		parameterType="string">
+		SELECT COUNT(*)
+		FROM book b
+		JOIN booksellrequest bsr ON b.book_id =
+		bsr.book_id
+		JOIN bookpublisher bp ON bsr.pub_id = bp.pub_id
+		WHERE
+		bsr.bsr_yn = 'y'
+		<if test="keyword != null and keyword != ''">
+			AND (
+			LOWER(b.book_name) LIKE '%' || LOWER(#{keyword}) ||
+			'%'
+			OR LOWER(b.book_writer) LIKE '%' || LOWER(#{keyword}) || '%'
+			)
+		</if>
+	</select>
+
+	<select id="increaseStock" parameterType="integer"
+		resultType="bookSW">
+		UPDATE book SET book_stock = book_stock + #{count} WHERE book_id = #{bookId}
+	</select>
+
+	<delete id="delete" parameterType="integer">
+		delete from book where book_id=#{bookId}
+	</delete>
+
+
+</mapper>

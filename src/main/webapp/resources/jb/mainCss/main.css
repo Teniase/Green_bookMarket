@@ -1,0 +1,127 @@
+/* === 기본 세팅 === */
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f8f9fa;
+	color: #333;
+	line-height: 1.6;
+}
+
+/* === BEST & NEW 영역 === */
+#bestNnew {
+	margin: 60px 0;
+	text-align: left;
+	letter-spacing: 0.5px;
+}
+
+/* === 박스 카드 형태 === */
+.box {
+	width: 100%;
+	margin-bottom: 50px;
+	padding: 30px;
+	border-radius: 16px;
+	background-color: #ffffff;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+	transition: box-shadow 0.3s ease;
+}
+
+.box:hover {
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* === 섹션 타이틀 === */
+.section-title {
+	display: flex;
+	align-items: center;
+	font-size: 24px;
+	font-weight: 700;
+	color: #343a40;
+	margin-bottom: 20px;
+}
+
+.section-title i {
+	color: #ff914c;
+	font-size: 26px;
+	margin-right: 10px;
+}
+
+
+/* === 날짜 스타일 === */
+.date-label {
+	font-size: 14px;
+	color: #868e96;
+	margin-left: 10px;
+}
+
+/* === 책 아이템 === */
+.bookSlot {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.bookImg {
+	width: 140px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 8px;
+	border: 1px solid #dee2e6;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	transition: transform 0.3s ease;
+}
+
+.bookImg:hover {
+	transform: scale(1.03);
+}
+
+/* === 책 제목 & 저자 === */
+.title {
+	display: block;
+	margin-top: 10px;
+	font-size: 17px;
+	font-weight: 600;
+	color: #495057;
+}
+
+.writer, .recommend {
+	display: block;
+	font-size: 14px;
+	color: #868e96;
+}
+
+/* === 캐러셀 === */
+.carousel {
+	margin-top: 30px;
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.carousel img {
+	object-fit: fill;
+	height: 400px;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+#modalImage {
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 1%; /* 🔽 기본은 약 15~20%임. 줄이면 좌우 폭이 확 줄어듦 */
+}
+
+/* === 반응형 조정 === */
+@media (max-width: 768px) {
+	.bookImg {
+		width: 100px;
+		height: 150px;
+	}
+
+	.section-title {
+		font-size: 20px;
+	}
+}
